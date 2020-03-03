@@ -2,7 +2,9 @@ import React,{useState, useEffect} from "react";
 import API from "../../utils/API";
 
 function Search(props) {
+  // Setting state
   const[state, setState] = useState({
+    // employee array first made for testing functionality
     empArray: [
       {
         image:"",
@@ -19,6 +21,8 @@ function Search(props) {
         phone: "666-666-6666"
       }
     ],
+    
+    // Filtered array after calling API
     filtArray: [
       {
         image:"",
@@ -37,12 +41,18 @@ function Search(props) {
     ]
   })
 
+  // Calling API
   useEffect( () => {
     API.getEmployee().then( (data)=>{
+      // console.log for testing
       console.log(data)
+      // Empty array to be pushed into later
       var cleanEmpArr = []
+      // Using map for data
       data.data.results.map((singleUser)=>{
+        // Empty object
         var cleanUser = {}
+        // Selecting data that we want to display
         cleanUser.name = singleUser.name.first+" "+singleUser.name.last
         cleanUser.email = singleUser.email
         cleanUser.phone = singleUser.phone
@@ -50,34 +60,42 @@ function Search(props) {
         cleanUser.image = singleUser.picture.thumbnail
         cleanEmpArr.push(cleanUser)
       })
+      // console log for testing
       console.log(cleanEmpArr)
+      // setting new state
       setState({...state, filtArray:cleanEmpArr,empArray:cleanEmpArr})
     })
+    // Stopping the map loop with []
   },[])
 
-
+// Grabbing the info from search bar
   const handleTyping= (e) => {
+    // console logs for testing
     console.log(e.target.value)
     console.log(e.target.value.length)
+    // empty array for filtered by typing
     var newFiltArray = []
+    // looping to "filter" employees
     state.empArray.map((singleEmp) => {
       var compareStr = ""
       for (var i = 0; i < e.target.value.length; i++){
+        // comparing typed string to employee name
         compareStr += singleEmp.name[i]
       }
+      // console log for testing
       console.log(compareStr)
+      // comparing target value to the compared string
       if (e.target.value.toLowerCase() === compareStr.toLocaleLowerCase()){
-        console.log("return for the search", singleEmp.name)
+        console.log("returned from the search", singleEmp.name)
+        // pushing into the filtered array
         newFiltArray.push(singleEmp)
       }
     })
-
-    setState({
-      ...state,
-      filtArray:newFiltArray
-    })
+    // setting the state of the filtered array
+    setState({...state, filtArray:newFiltArray})
   }
 
+  // html elements
   return (
     <div className="container">
       <br></br>
@@ -85,6 +103,7 @@ function Search(props) {
         <div className="container text-center">
           <br></br>
           <form className="form">
+            {/* handle typing called to compare typed search with arrays */}
             <input onChange={handleTyping} className="form-control" type="search" placeholder="Search" aria-label="Search"/>
           </form>
           <br></br>
@@ -101,6 +120,7 @@ function Search(props) {
               </tr>
             </thead>
             <tbody>
+              {/* looping through the filtered array and printing each employee in array */}
               { state.filtArray.map((singleEmp)=>{
                   return(
                     <tr>

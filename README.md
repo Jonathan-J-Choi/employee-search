@@ -1,7 +1,7 @@
 ## Employee-Searcher
 
 ## Table of contents
-
+- [Demo](#demo)
 - [General info](#general-info)
 - [Instructions](#instructions)
 - [Technologies](#technologies)
@@ -28,10 +28,10 @@ In order to use the application, be sure to install all of the dependencies (see
 
 ## Dependencies
 
-- axios: "^0.19.2",
-- react: "^16.13.0",
-- "react-dom": "^16.13.0",
-- "react-scripts": "3.4.0"
+- axios: 0.19.2
+- react: 16.13.0
+- react-dom: 16.13.0
+- react-scripts: 3.4.0
 
 ## Github Link
 
